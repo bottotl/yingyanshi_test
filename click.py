@@ -103,14 +103,20 @@ def yuhun(d):
 			click_image(d, "yuhunjieshu_4.750x1334.png")
 			click_image(d, "shibai_jixu.750x1334.png")
 			if d.exists("tilibuzu_goumaitili.750x1334.png") != None:
-				click_image(d, "close_btn_tili_2.750x1334.png");
-				time.sleep(2);
-				d.home();
+				stopAll(d)
 				i=100
 		i = i+1;
 
-	stopJiacheng(d, "jiacheng_entrance_2.750x1334.png");
+	stopJiacheng(d);
 	print 'exit'
+
+def stopAll(d):
+	click_image(d, "close_btn_tili_2.750x1334.png");
+	time.sleep(2);
+	backHome(d)
+	stopJiacheng(d);
+	d.home();
+	
 
 def juexing(d):
 	if d.exists("tiaozhan.750x1334.png") != None:
@@ -243,17 +249,22 @@ def douji(d):
 def stopyuhunjiacheng():
 	pass
 
-def stopJiacheng(d, image):
+def stopJiacheng(d):
+	backHome(d)
 	# 进入加成页面
-	click_image(d,image)
+	wait_image(d, "jiacheng_entrance_home.750x1334.png")
 	#关闭所有加成
+	time.sleep(2);
 	d.screenshot('screen.1920x1080.png') # Save screenshot as file
-	runnings = find_all_image_position("screen.1920x1080.png", image);
+	print "stop jiacheng"
+	runnings = find_all_image_position("screen.1920x1080.png", "jiacheng_running.750x1334.png");
+	print runnings;
 	for run in runnings:
-		click(d, run[0], run[1]);
+		click(d, run[0], run[1], False);
 		time.sleep(0.2);
 	# 退出加成页面
-	click_image(d, image)
+	wait_image(d, "jiacheng_entrance_home.750x1334.png")
+
 
 def startJiacheng(d, image):
 	# 进入加成页面
@@ -371,7 +382,7 @@ def zzz_douji(d):
 	click_image(d, "zzz_end_jiangli.750x1334.png")
 	d.free_screen()
 
-def tansuo_lianji(d):
+def tansuo_lianji_28(d):
 
 	backHome(d)
 	tansuo(d)
@@ -394,7 +405,32 @@ def tansuo_lianji(d):
 			while tansuo_find(d):
 				pass
 
-	stopJiacheng(d, "jiachçeng_jingyan.750x1334.png");
+	stopJiacheng(d);
+
+def tansuo_lianji_6(d):
+
+	backHome(d)
+	tansuo(d)
+	time.sleep(2);
+	while click_image(d, "tansuo_level_6.750x1334.png") != None:
+		pass
+	
+	startJiacheng(d, "jiacheng_jingyan.750x1334.png");
+	while 1:
+		if click_image(d, "tansuo_baoxiang_big.750x1334.png") != None:
+			time.sleep(5);
+			click_image(d, "yuhunjieshu_4.750x1334.png")
+
+		if click_image(d, "tansuo_level_6.750x1334.png") != None:
+			time.sleep(3);
+			click_image(d, "tansuo_start.750x1334.png");
+			while tansuo_find(d):
+				pass
+		elif click_image(d, "tansuo_start.750x1334.png") != None:
+			while tansuo_find(d):
+				pass
+
+	stopJiacheng(d);
 
 # d = atx.connect('http://192.168.0.104:8100', platform='ios') # platform也可以不指定
 d = atx.connect('http://172.18.40.153:8100', platform='ios') # platform也可以不指定
@@ -404,16 +440,16 @@ i = 0
 
 #lianxiaohao(d);
 #kaiqijiacheng(d)
-# tansuo_lianji(d);
+# tansuo_lianji_6(d);
 
 # while 1:
 #  	zzz_douji(d);
 	
-
+#stopAll(d);
 while i<10:
-	yingyangliao_tupo(d)
-	geren_tupo(d);
 	# yuhun(d);
+	yingyangliao_tupo(d)
+	# geren_tupo(d);
 	i = i+1;
 
 # d.click();
