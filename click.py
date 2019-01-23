@@ -138,6 +138,7 @@ def backHome(d):
 		click_image(d, "close_btn.750x1334.png")
 		click_image(d, "close_btn_1.750x1334.png")
 		click_image(d, "return_btn.750x1334.png")
+		click_image(d, "tuichu_tansuo_queren.750x1334.png")
 
 
 def tansuo(d):
@@ -365,13 +366,22 @@ def change_gouliang_and_start(d):
 def tansuo_find(d):
 	if d.exists("tansuo_daguai.750x1334.png") != None:
 		print "find boss";
-		click_image(d, "tansuo_daguai.750x1334.png")
+		while d.exists("tansuo_daguai.750x1334.png") != None:
+			if (click_image(d, "tansuo_daguai.750x1334.png") == None):
+				click(d, 186, 904);
+			if d.exists("tilibuzu_goumaitili.750x1334.png") != None:
+				stopAll(d)
 		change_gouliang_and_start(d);
 	elif (d.exists("yuhun_entrance.750x1334.png") != None) | (d.exists("tansuo.750x1334.png") != None):
 		print "did end tansuo"
 		return False;
 	elif click_image(d, "daxiaoguai_3.750x1334.png") != None:
 		print "find xiaoguai";
+		while d.exists("daxiaoguai_3.750x1334.png") != None:
+			if (click_image(d, "daxiaoguai_3.750x1334.png") == None):
+				click(d, 186, 904);     
+			if d.exists("tilibuzu_goumaitili.750x1334.png") != None:
+				stopAll(d)
 		change_gouliang_and_start(d);
 	elif d.exists("tansuo_xiao_baoxiang.750x1334.png") != None:
 		click_image(d, "tansuo_xiao_baoxiang.750x1334.png");
@@ -410,13 +420,13 @@ def zzz_douji(d):
 
 def tansuo_lianji_28(d):
 
-	# backHome(d)
-	# tansuo(d)
-	# time.sleep(2);
+	backHome(d)
+	tansuo(d)
+	time.sleep(2);
 	while click_image(d, "tansuo_level_28.750x1334.png") != None:
 		pass
 	
-	# startJiacheng(d, "jiacheng_jingyan.750x1334.png");
+	startJiacheng(d, "jiacheng_jingyan.750x1334.png");
 	while 1:
 		if click_image(d, "tansuo_baoxiang_big.750x1334.png") != None:
 			time.sleep(5);
@@ -431,10 +441,9 @@ def tansuo_lianji_28(d):
 			while tansuo_find(d):
 				pass
 
-	# stopJiacheng(d);
+	stopJiacheng(d);
 
 def tansuo_lianji_6(d):
-
 	backHome(d)
 	tansuo(d)
 	time.sleep(2);
@@ -455,7 +464,6 @@ def tansuo_lianji_6(d):
 		elif click_image(d, "tansuo_start.750x1334.png") != None:
 			while tansuo_find(d):
 				pass
-
 	stopJiacheng(d);
 
 # d = atx.connect('http://192.168.0.104:8100', platform='ios') # platform也可以不指定
@@ -464,10 +472,13 @@ print d.rotation
 dis = d.display
 i = 0
 
-#lianxiaohao(d);
+# lianxiaohao(d);
 #kaiqijiacheng(d)
-#tansuo_lianji_6(d);
-tansuo_lianji_28(d);
+# while 1:
+# 	tansuo_lianji_6(d);
+# 	geren_tupo(d);
+
+#tansuo_lianji_28(d);
 # while 1:
 #  	zzz_douji(d); 
 	
@@ -475,7 +486,7 @@ tansuo_lianji_28(d);
 while i<10:
 	yingyangliao_tupo(d)
 	geren_tupo(d);
-	# yuhun(d);
+	yuhun(d);
 	i = i+1;
 
 # d.click();
