@@ -334,19 +334,45 @@ def lianxiaohao(d):
 		d.free_screen()
 		# click_guild(d);
 
+def change_gouliang(d):
+	print "start change gouliang"
+	while d.exists("zhunbei.750x1334.png") == None:
+		pass
+	while d.exists("gouliang_quanbu_btn.750x1334.png") == None:
+		click(d, 216, 486);
+		time.sleep(1);
+	
+	wait_image(d, "gouliang_quanbu_btn.750x1334.png");
+	wait_image(d, "gouliang_sucai_btn.750x1334.png");
+	swipe(d, 156, 946, 122, 300);#左滑一段距离
+	time.sleep(1);
+	swipe(d, 140, 398, 364, 214);#替换第一张狗粮
+	time.sleep(1);
+	swipe(d, 132, 618, 378, 658);#替换第二张狗粮
+	print "end change gouliang"
+
+def change_gouliang_and_start(d):
+	while d.exists("zhunbei.750x1334.png") == None:
+		pass
+	d.screenshot('screen.1920x1080.png') # Save screenshot as file
+	t = find_all_image_position("screen.1920x1080.png", "gouliang_manji.750x1334.png", 0.8)
+	if len(t)>1:
+		print "need change gouliang";
+		change_gouliang(d);
+			
+	click_image(d, "zhunbei.750x1334.png")
+
 def tansuo_find(d):
 	if d.exists("tansuo_daguai.750x1334.png") != None:
 		print "find boss";
 		click_image(d, "tansuo_daguai.750x1334.png")
-		time.sleep(2);
-		click_image(d, "zhunbei.750x1334.png")
+		change_gouliang_and_start(d);
 	elif (d.exists("yuhun_entrance.750x1334.png") != None) | (d.exists("tansuo.750x1334.png") != None):
 		print "did end tansuo"
 		return False;
 	elif click_image(d, "daxiaoguai_3.750x1334.png") != None:
 		print "find xiaoguai";
-		time.sleep(2);
-		click_image(d, "zhunbei.750x1334.png")
+		change_gouliang_and_start(d);
 	elif d.exists("tansuo_xiao_baoxiang.750x1334.png") != None:
 		click_image(d, "tansuo_xiao_baoxiang.750x1334.png");
 		print "xiao baoxiang";
@@ -384,13 +410,13 @@ def zzz_douji(d):
 
 def tansuo_lianji_28(d):
 
-	backHome(d)
-	tansuo(d)
-	time.sleep(2);
+	# backHome(d)
+	# tansuo(d)
+	# time.sleep(2);
 	while click_image(d, "tansuo_level_28.750x1334.png") != None:
 		pass
 	
-	startJiacheng(d, "jiacheng_jingyan.750x1334.png");
+	# startJiacheng(d, "jiacheng_jingyan.750x1334.png");
 	while 1:
 		if click_image(d, "tansuo_baoxiang_big.750x1334.png") != None:
 			time.sleep(5);
@@ -405,7 +431,7 @@ def tansuo_lianji_28(d):
 			while tansuo_find(d):
 				pass
 
-	stopJiacheng(d);
+	# stopJiacheng(d);
 
 def tansuo_lianji_6(d):
 
@@ -440,16 +466,16 @@ i = 0
 
 #lianxiaohao(d);
 #kaiqijiacheng(d)
-# tansuo_lianji_6(d);
-
+#tansuo_lianji_6(d);
+tansuo_lianji_28(d);
 # while 1:
-#  	zzz_douji(d);
+#  	zzz_douji(d); 
 	
 #stopAll(d);
 while i<10:
-	# yuhun(d);
 	yingyangliao_tupo(d)
-	# geren_tupo(d);
+	geren_tupo(d);
+	# yuhun(d);
 	i = i+1;
 
 # d.click();
