@@ -285,17 +285,25 @@ def startJiacheng(d, image):
 	print t_btns;
 
 	icons = find_all_image_position("screen.1920x1080.png", image);
+	print("find jiacheng %d"%(len(icons)))
 	if len(icons):
-		icon = icons[0];
-		print icon;
-		target = t_btns[0];
-		dis = 9999;
-		for btn in t_btns:
-			if abs(btn[0] - icon[0]) < dis:
-				dis = abs(btn[0] - icon[0]);
-				target = btn
-		print "success kaiqi yuhun jiacheng"
-		click(d, target[0], target[1], False);
+		for icon in icons:
+			print icon;
+			target = None;
+			dis = 9999;
+			for btn in t_btns:
+				print btn
+				tDis = abs(btn[0] - icon[0]);
+				print("tDis=",tDis,"dis=",dis, "btn =", btn);
+				if tDis < dis:
+					dis = tDis
+					target = btn
+					print(target,"= btn")
+
+					print(target,"= btn")
+			print("target = ", target)
+			time.sleep(1);
+			click(d, target[0], target[1], False);
 	# 退出加成页面
 	wait_image(d, "jiacheng_entrance_2.750x1334.png")
 
@@ -425,7 +433,7 @@ def tansuo_lianji_28(d):
 	time.sleep(2);
 	while click_image(d, "tansuo_level_28.750x1334.png") != None:
 		pass
-	
+	time.sleep(1);
 	startJiacheng(d, "jiacheng_jingyan.750x1334.png");
 	while 1:
 		if click_image(d, "tansuo_baoxiang_big.750x1334.png") != None:
