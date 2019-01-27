@@ -373,26 +373,25 @@ def change_gouliang_and_start(d):
 			
 	click_image(d, "zhunbei.750x1334.png")
 
+def tansuo_find_boss(d):
+	while (d.exists("tansuo_daguai.750x1334.png") == None) & (d.exists("daxiaoguai_3.750x1334.png") == None):
+		print "no boss to attack"
+		offset = random.random() * 10;
+		click(d, 262 + offset, 880 + offset);
+		time.sleep(1.3);
+	print "find boss"
+
 def tansuo_find(d):
-	if d.exists("tansuo_daguai.750x1334.png") != None:
-		print "find boss";
-		while d.exists("tansuo_daguai.750x1334.png") != None:
-			if (click_image(d, "tansuo_daguai.750x1334.png") == None):
-				click(d, 186, 904);
-			if d.exists("tilibuzu_goumaitili.750x1334.png") != None:
-				stopAll(d)
+	if (d.exists("tansuo_daguai.750x1334.png") != None) | (d.exists("daxiaoguai_3.750x1334.png") != None):
+		tansuo_find_boss(d)
+		click_image(d, "tansuo_daguai.750x1334.png");
+		click_image(d, "daxiaoguai_3.750x1334.png");
+		if d.exists("tilibuzu_goumaitili.750x1334.png") != None:
+			stopAll(d)
 		change_gouliang_and_start(d);
 	elif (d.exists("yuhun_entrance.750x1334.png") != None) | (d.exists("tansuo.750x1334.png") != None):
 		print "did end tansuo"
 		return False;
-	elif click_image(d, "daxiaoguai_3.750x1334.png") != None:
-		print "find xiaoguai";
-		while d.exists("zhunbei.750x1334.png") == None:
-			click_image(d, "daxiaoguai_3.750x1334.png");
-			click(d, 186, 904);
-			if d.exists("tilibuzu_goumaitili.750x1334.png") != None:
-				stopAll(d)
-		change_gouliang_and_start(d);
 	elif d.exists("tansuo_xiao_baoxiang.750x1334.png") != None:
 		click_image(d, "tansuo_xiao_baoxiang.750x1334.png");
 		print "xiao baoxiang";
