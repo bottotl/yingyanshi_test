@@ -11,10 +11,10 @@ def swipe(d, x1, y1, x2, y2):
 	y11 = dis.height - x1
 	x11 = y1
 
-	y22 = dis.height - x2;
+	y22 = dis.height - x2
 	x22 = y2
 
-	d.swipe(x11, y11, x22, y22, 0.5);
+	d.swipe(x11, y11, x22, y22, 0.5)
 
 def find_all_image_position(origin='origin.png', query='query.png', confidence=0.9):
     imsrc = ac.imread(origin) # 原始图像
@@ -24,20 +24,20 @@ def find_all_image_position(origin='origin.png', query='query.png', confidence=0
     for pos in posArray:
     	if pos['confidence'] > confidence:
     		t.append(pos['result'])
-    return t;
+    return t
 
 def click_image(d, image):
 	FindPoint = d.exists(image)
 	if FindPoint != None:
 		print(image)
 		p_click(d, FindPoint)
-		time.sleep(1);
+		time.sleep(1)
 	return FindPoint
 
 def wait_image(d, image):
 	FindPoint = None
 	while FindPoint is None:
-		print image;
+		print image
 		print 'finding...'
 		FindPoint = d.exists(image)
 	p_click(d, FindPoint)
@@ -47,7 +47,7 @@ def wait_image(d, image):
 def p_click(d, FindPoint):
 	dis = d.display
 	y = dis.height - FindPoint.pos[0] + random.random()*5
-	x = FindPoint.pos[1] + random.random()*4;
+	x = FindPoint.pos[1] + random.random()*4
 	# print("click (%f, %f)" % (x, y))
 	d.click(x , y)
 
@@ -62,12 +62,12 @@ def click(d, x1, y1, offset=True):
 	y = dis.height - x1
 	x = y1
 	if offset:
-		x = x + random.random()*5;
-		y = y + random.random()*4;
+		x = x + random.random()*5
+		y = y + random.random()*4
 	else:
 		pass
 	print("click (%f, %f)" % (x, y))
-	d.click(x, y);
+	d.click(x, y)
 
 	
 def yeyuanhuo(d):
@@ -80,18 +80,18 @@ def yeyuanhuo(d):
 		click_image(d, "yuhunjieshu_4.750x1334.png")
 		click_image(d, "shibai_jixu.750x1334.png")
 		if d.exists("tilibuzu_goumaitili.750x1334.png") != None:
-			click_image(d, "close_btn_tili_2.750x1334.png");
-			time.sleep(2);
-			d.home();
+			click_image(d, "close_btn_tili_2.750x1334.png")
+			time.sleep(2)
+			d.home()
 
 def yuhun(d):
 	backHome(d)
 	tansuo(d)
 	wait_image(d, "yuhun_entrance.750x1334.png")
-	time.sleep(2);
+	time.sleep(2)
 	click_image(d, "yuhun_dashe.750x1334.png")
-	time.sleep(2);
-	startJiacheng(d, "jiacheng_yuhun.750x1334.png");
+	time.sleep(2)
+	startJiacheng(d, "jiacheng_yuhun.750x1334.png")
 	i = 0
 	while i<20:
 		wait_image(d, "tiaozhan.750x1334.png")
@@ -105,23 +105,23 @@ def yuhun(d):
 			if d.exists("tilibuzu_goumaitili.750x1334.png") != None:
 				stopAll(d)
 				i=100
-		i = i+1;
+		i = i+1
 
-	stopJiacheng(d);
+	stopJiacheng(d)
 	print 'exit'
 
 def stopAll(d):
-	click_image(d, "close_btn_tili_2.750x1334.png");
-	time.sleep(2);
+	click_image(d, "close_btn_tili_2.750x1334.png")
+	time.sleep(2)
 	backHome(d)
-	stopJiacheng(d);
-	d.home();
+	stopJiacheng(d)
+	d.home()
 	
 
 def juexing(d):
 	if d.exists("tiaozhan.750x1334.png") != None:
-		click_image(d, "tiaozhan.750x1334.png");
-		time.sleep(2);
+		click_image(d, "tiaozhan.750x1334.png")
+		time.sleep(2)
 		while d.exists("tiaozhan.750x1334.png") == None:
 			click_image(d, "zhunbei.750x1334.png")
 			click_image(d, "yuhunjieshu_4.750x1334.png")
@@ -149,12 +149,12 @@ def geren_tupo(d):
 	backHome(d)
 	tansuo(d)
 	wait_image(d, "tupo_entrance.750x1334.png")
-	time.sleep(2);
+	time.sleep(2)
 	click_image(d, "tupo_geren.750x1334.png")
-	time.sleep(2);
+	time.sleep(2)
 
 	users = tupoUserPositions(d)
-	i = 0;
+	i = 0
 	while i < 2:
 		for user in users:
 			print 'enter loop'
@@ -162,31 +162,31 @@ def geren_tupo(d):
 				click_image(d, "yuhunjieshu_4.750x1334.png")
 				click_image(d, "shibai_jixu.750x1334.png")
 				click_im(d, user)
-				time.sleep(2);
+				time.sleep(2)
 
 			click_image(d, "tupo_jingong.750x1334.png")
-			time.sleep(2);
+			time.sleep(2)
 			while 1:
 				if d.exists("tupo_jingong.750x1334.png"):
-					print "can not continue tupo, end topo";
-					click(d, 600, 78);
-					return;
+					print "can not continue tupo, end topo"
+					click(d, 600, 78)
+					return
 
 				click_image(d, "zhunbei.750x1334.png")
 				if (click_image(d, "yuhunjieshu_4.750x1334.png") != None) | (click_image(d, "shibai_jixu.750x1334.png") != None):
-					time.sleep(3);
-					break;
-		click_image(d, "tupo_shuaxin.750x1334.png");
-		time.sleep(2);
-		click_image(d, "tupo_queding.750x1334.png");
-		time.sleep(2);
-		users = tupoUserPositions(d);
+					time.sleep(3)
+					break
+		click_image(d, "tupo_shuaxin.750x1334.png")
+		time.sleep(2)
+		click_image(d, "tupo_queding.750x1334.png")
+		time.sleep(2)
+		users = tupoUserPositions(d)
 		if len(users) < 1:
-			i = i+1;
+			i = i+1
 			print "find more user to kill"
 	time.sleep(2)
 	click_image(d, "yuhunjieshu_4.750x1334.png")
-	time.sleep(2);
+	time.sleep(2)
 	click_image(d, "yuhunjieshu_4.750x1334.png")
 	print "no more user to kill"
 
@@ -194,13 +194,13 @@ def yingyangliao_tupo(d):
 	backHome(d)
 	tansuo(d)
 	wait_image(d, "tupo_entrance.750x1334.png")
-	time.sleep(2);
+	time.sleep(2)
 	click_image(d, "tupo_geren.750x1334.png")
-	time.sleep(2);
+	time.sleep(2)
 	click_image(d, "tupo_yinyangliao.750x1334.png")
-	time.sleep(2);
+	time.sleep(2)
 	users = tupoUserPositions(d)
-	i = 0;
+	i = 0
 	while i < 4:
 		for user in users:
 			print 'enter loop'
@@ -208,25 +208,25 @@ def yingyangliao_tupo(d):
 				click_image(d, "yuhunjieshu_4.750x1334.png")
 				click_image(d, "shibai_jixu.750x1334.png")
 				click_im(d, user)
-				time.sleep(2);
+				time.sleep(2)
 
 			click_image(d, "tupo_jingong.750x1334.png")
-			time.sleep(2);
+			time.sleep(2)
 			while 1:
 				if d.exists("tupo_jingong.750x1334.png"):
-					print "can not continue tupo, end topo";
-					click(d, 600, 78);
-					return;
+					print "can not continue tupo, end topo"
+					click(d, 600, 78)
+					return
 
 				click_image(d, "zhunbei.750x1334.png")
 				if (click_image(d, "yuhunjieshu_4.750x1334.png") != None) | (click_image(d, "shibai_jixu.750x1334.png") != None):
-					break;
-		time.sleep(1);
-		swipe(d, 148, 758, 590, 846);
-		time.sleep(2);
-		users = tupoUserPositions(d);
+					break
+		time.sleep(1)
+		swipe(d, 148, 758, 590, 846)
+		time.sleep(2)
+		users = tupoUserPositions(d)
 		if len(users) < 1:
-			i = i+1;
+			i = i+1
 			print "find more user to kill"
 	click_image(d, "yuhunjieshu_4.750x1334.png")
 	time.sleep(2)
@@ -236,13 +236,13 @@ def yingyangliao_tupo(d):
 
 
 def switch_zidong_shoudong(d):
-	click(d, 58, 62);
+	click(d, 58, 62)
 
 def tupoUserPositions(d):
 	d.screenshot('screen.1920x1080.png') # Save screenshot as file
 	t = find_all_image_position("screen.1920x1080.png", "tupo_user_flag.750x1334.png", 0.8)
 	print "find users %d" %(len(t))
-	return t;
+	return t
 
 def douji(d):
 	return
@@ -255,14 +255,14 @@ def stopJiacheng(d):
 	# 进入加成页面
 	wait_image(d, "jiacheng_entrance_home.750x1334.png")
 	#关闭所有加成
-	time.sleep(2);
+	time.sleep(2)
 	d.screenshot('screen.1920x1080.png') # Save screenshot as file
 	print "stop jiacheng"
-	runnings = find_all_image_position("screen.1920x1080.png", "jiacheng_running.750x1334.png");
-	print runnings;
+	runnings = find_all_image_position("screen.1920x1080.png", "jiacheng_running.750x1334.png")
+	print runnings
 	for run in runnings:
-		click(d, run[0], run[1], False);
-		time.sleep(0.2);
+		click(d, run[0], run[1], False)
+		time.sleep(1)
 	# 退出加成页面
 	wait_image(d, "jiacheng_entrance_home.750x1334.png")
 
@@ -271,30 +271,31 @@ def startJiacheng(d, image):
 	# 进入加成页面
 	wait_image(d, "jiacheng_entrance_2.750x1334.png")
 	#关闭所有加成
+	time.sleep(2)
 	d.screenshot('screen.1920x1080.png') # Save screenshot as file
-	runnings = find_all_image_position("screen.1920x1080.png", "jiacheng_running.750x1334.png");
+	runnings = find_all_image_position("screen.1920x1080.png", "jiacheng_running.750x1334.png")
 	for run in runnings:
 		print "stop jiacheng"
-		click(d, run[0], run[1], False);
-		time.sleep(0.2);
+		click(d, run[0], run[1], False)
+		time.sleep(1)
 
 	print "start kaiqi jiacheng"
 	#查找加成开关
 	d.screenshot('screen.1920x1080.png') # Save screenshot as file
-	t_btns = find_all_image_position("screen.1920x1080.png", "jiacheng_pauseing.750x1334.png");
-	print t_btns;
+	t_btns = find_all_image_position("screen.1920x1080.png", "jiacheng_pauseing.750x1334.png")
+	print t_btns
 
-	icons = find_all_image_position("screen.1920x1080.png", image);
+	icons = find_all_image_position("screen.1920x1080.png", image)
 	print("find jiacheng %d"%(len(icons)))
 	if len(icons):
 		for icon in icons:
-			print icon;
-			target = None;
-			dis = 9999;
+			print icon
+			target = None
+			dis = 9999
 			for btn in t_btns:
 				print btn
-				tDis = abs(btn[0] - icon[0]);
-				print("tDis=",tDis,"dis=",dis, "btn =", btn);
+				tDis = abs(btn[0] - icon[0])
+				print("tDis=",tDis,"dis=",dis, "btn =", btn)
 				if tDis < dis:
 					dis = tDis
 					target = btn
@@ -302,20 +303,20 @@ def startJiacheng(d, image):
 
 					print(target,"= btn")
 			print("target = ", target)
-			time.sleep(1);
-			click(d, target[0], target[1], False);
+			time.sleep(1)
+			click(d, target[0], target[1], False)
 	# 退出加成页面
 	wait_image(d, "jiacheng_entrance_2.750x1334.png")
 
 def quick_click_image(d, image):
 	d.keep_screen()
-	pos = click_image(d, image);
+	pos = click_image(d, image)
 	d.free_screen()
-	return pos;
+	return pos
 
 def click_guild(d):
 	d.keep_screen()
-	FindPoint = click_image(d, "hand_guild.750x1334.png");
+	FindPoint = click_image(d, "hand_guild.750x1334.png")
 	d.free_screen()
 
 	dis = d.display
@@ -326,13 +327,13 @@ def click_guild(d):
 
 def lianxiaohao(d):
 	while 1:
-		click_image(d, "diandiandian.750x1334.png");
-		click_image(d, "diandiandian_2.750x1334.png");
+		click_image(d, "diandiandian.750x1334.png")
+		click_image(d, "diandiandian_2.750x1334.png")
 		d.keep_screen()
-		click_image(d, "daxiaoguai_1.750x1334.png");
-		click_image(d, "juqing_yanjing.750x1334.png");
-		click_image(d, "juqing_wenhao.750x1334.png");
-		click_image(d, "skip.750x1334.png");
+		click_image(d, "daxiaoguai_1.750x1334.png")
+		click_image(d, "juqing_yanjing.750x1334.png")
+		click_image(d, "juqing_wenhao.750x1334.png")
+		click_image(d, "skip.750x1334.png")
 		click_image(d, "zhunbei.750x1334.png")
 		click_image(d, "yuhunjieshu_4.750x1334.png")
 		click_image(d, "shibai_jixu.750x1334.png")
@@ -341,75 +342,85 @@ def lianxiaohao(d):
 		click_image(d, "tupo_queding.750x1334.png")
 		click_image(d, "close_btn.750x1334.png")
 		d.free_screen()
-		# click_guild(d);
+		# click_guild(d)
 
 def change_gouliang(d):
 	print "start change gouliang"
 	while d.exists("zhunbei.750x1334.png") == None:
 		pass
 	while d.exists("gouliang_quanbu_btn.750x1334.png") == None:
-		click(d, 216, 486);
-		time.sleep(1);
+		click(d, 216, 486)
+		time.sleep(3)
 	
 	if d.exists("gouliang_sucai_btn.750x1334.png") == None:
-		wait_image(d, "gouliang_quanbu_btn.750x1334.png");
+		wait_image(d, "gouliang_quanbu_btn.750x1334.png")
+		time.sleep(2)
 
-	wait_image(d, "gouliang_sucai_btn.750x1334.png");
-	swipe(d, 148, 764, 126, 496);#左滑一段距离
-	time.sleep(1);
-	swipe(d, 134, 374, 370, 194);#替换第一张狗粮
-	time.sleep(2);
-	swipe(d, 138, 618, 364, 582);#替换第二张狗粮
+	wait_image(d, "gouliang_sucai_btn.750x1334.png")
+	swipe(d, 148, 764, 126, 496)#左滑一段距离
+	time.sleep(1)
+	swipe(d, 134, 374, 370, 194)#替换第一张狗粮
+	time.sleep(2)
+	swipe(d, 138, 618, 364, 582)#替换第二张狗粮
 	print "end change gouliang"
 
 def change_gouliang_and_start(d):
+	print "change_gouliang_and_start"
 	while d.exists("zhunbei.750x1334.png") == None:
 		pass
 	d.screenshot('screen.1920x1080.png') # Save screenshot as file
 	t = find_all_image_position("screen.1920x1080.png", "gouliang_manji.750x1334.png", 0.8)
 	if len(t)>1:
-		print "need change gouliang";
-		change_gouliang(d);
+		print "need change gouliang"
+		change_gouliang(d)
 			
 	click_image(d, "zhunbei.750x1334.png")
+	print "change gouliang end"
 
 def tansuo_find_boss(d):
-	while (d.exists("tansuo_daguai.750x1334.png") == None) & (d.exists("daxiaoguai_3.750x1334.png") == None):
-		print "no boss to attack"
-		offset = random.random() * 10;
-		click(d, 262 + offset, 880 + offset);
-		time.sleep(1.3);
-	print "find boss"
+	attack = False
+	while (d.exists("tansuo_daguai.750x1334.png") != None) | (d.exists("daxiaoguai_3.750x1334.png") != None):
+		click_image(d, "tansuo_daguai.750x1334.png")
+		click_image(d, "daxiaoguai_3.750x1334.png")
+		attack = True
+	
+	if attack == False:
+		print "no boss to attack, move right"
+		offset = random.random() * 10
+		click(d, 140 + offset, 920 + offset)
+		time.sleep(1)
+	return attack
 
 def tansuo_find(d):
-	if (d.exists("tansuo_daguai.750x1334.png") != None) | (d.exists("daxiaoguai_3.750x1334.png") != None):
-		tansuo_find_boss(d)
-		click_image(d, "tansuo_daguai.750x1334.png");
-		click_image(d, "daxiaoguai_3.750x1334.png");
-		if d.exists("tilibuzu_goumaitili.750x1334.png") != None:
-			stopAll(d)
-		change_gouliang_and_start(d);
-	elif (d.exists("yuhun_entrance.750x1334.png") != None) | (d.exists("tansuo.750x1334.png") != None):
-		print "did end tansuo"
-		return False;
-	elif d.exists("tansuo_xiao_baoxiang.750x1334.png") != None:
-		click_image(d, "tansuo_xiao_baoxiang.750x1334.png");
-		print "xiao baoxiang";
-	elif d.exists("tansuo_baoxiang_jiangli.750x1334.png") != None:
-		click(d, 398, 1120);
-		time.sleep(1);
-	elif d.exists("return_btn.750x1334.png") != None:
-		print "No more to kill, move"
-		time.sleep(1);
-		click(d, 186, 904);
-	else:
-		print "maybe attacking"
-		click_image(d, "zhunbei.750x1334.png")
-		click_image(d, "yuhunjieshu_3.750x1334.png")
-		click_image(d, "yuhunjieshu_4.750x1334.png")
-		click_image(d, "yuhunjieshu_4.750x1334.png")
-		click_image(d, "shibai_jixu.750x1334.png")
-	return True;
+	while d.exists("tansuo.750x1334.png") != None:
+		click_image(d, "tansuo.750x1334.png")
+		time.sleep(1)
+
+	print "start tansuo"
+	while (d.exists("tansuo.750x1334.png") == None) & (d.exists("tansuo_home_flag.750x1334.png") == None):
+		if d.exists("tansuo_xiao_baoxiang.750x1334.png") != None:#结束以后点击宝箱
+			while (d.exists("tansuo_xiao_baoxiang.750x1334.png") != None) | (d.exists("tansuo_huodejiangli.750x1334.png") != None):
+				click_image(d, "tansuo_xiao_baoxiang.750x1334.png")
+				time.sleep(2)
+				if d.exists("tansuo_huodejiangli.750x1334.png") != None:
+					click(d, 330, 1160)
+					print "jiang li"
+					time.sleep(2)
+		elif d.exists("return_btn.750x1334.png") != None:#找怪物
+			if tansuo_find_boss(d):
+				print "find boss"
+				if d.exists("tilibuzu_goumaitili.750x1334.png") != None:
+					stopAll(d)
+				change_gouliang_and_start(d)
+		else:#退出战斗界面
+			print "maybe attacking"
+			click_image(d, "zhunbei.750x1334.png")
+			click_image(d, "yuhunjieshu_3.750x1334.png")
+			time.sleep(2)
+			click_image(d, "yuhunjieshu_4.750x1334.png")
+			click_image(d, "yuhunjieshu_4.750x1334.png")
+			click_image(d, "shibai_jixu.750x1334.png")
+	print "end tansuo"
 
 def zzz_douji(d):
 	enter = "zzz_pipei.750x1334.png"#匹配按钮
@@ -418,12 +429,12 @@ def zzz_douji(d):
 	zidongshangzhen = "douji_zidongshangzheng.750x1334.png"#自动上阵
 	shoudong2zidong = "douji_shoudong_2_zidong.750x1334.png"#手动改自动
 
-	# click_image(d, lijijiechu);
+	# click_image(d, lijijiechu)
 	# click_image(d, quxiao)
 	click_image(d, enter)
 	d.keep_screen()
-	click_image(d, zidongshangzhen);
-	click_image(d, shoudong2zidong);
+	click_image(d, zidongshangzhen)
+	click_image(d, shoudong2zidong)
 	click_image(d, "zhunbei.750x1334.png")
 	click_image(d, "zzz_end.750x1334.png")
 	# click_image(d, "zzz_end_jiutun.750x1334.png")
@@ -434,74 +445,74 @@ def tansuo_lianji_28(d):
 
 	backHome(d)
 	tansuo(d)
-	time.sleep(2);
+	time.sleep(2)
 	while click_image(d, "tansuo_level_28.750x1334.png") != None:
 		pass
-	time.sleep(1);
-	startJiacheng(d, "jiacheng_jingyan.750x1334.png");
+	time.sleep(1)
+	startJiacheng(d, "jiacheng_jingyan.750x1334.png")
 	while 1:
 		if click_image(d, "tansuo_baoxiang_big.750x1334.png") != None:
-			time.sleep(5);
+			time.sleep(5)
 			click_image(d, "yuhunjieshu_4.750x1334.png")
 
 		if click_image(d, "tansuo_level_28.750x1334.png") != None:
-			time.sleep(3);
-			click_image(d, "tansuo_start.750x1334.png");
+			time.sleep(3)
+			click_image(d, "tansuo_start.750x1334.png")
+			time.sleep(2)
 			while tansuo_find(d):
 				pass
 		elif click_image(d, "tansuo_start.750x1334.png") != None:
+			time.sleep(2)
 			while tansuo_find(d):
 				pass
 
-	stopJiacheng(d);
+	stopJiacheng(d)
 
-def tansuo_lianji_10(d):
-	backHome(d)
-	tansuo(d)
-	time.sleep(2);
+def tansuo_lianji_18(d):
+	# backHome(d)
+	# tansuo(d)
+	# time.sleep(2)
 	while click_image(d, "tansuo_level_10.750x1334.png") != None:
 		pass
 	
-	startJiacheng(d, "jiacheng_jingyan.750x1334.png");
+	# startJiacheng(d, "jiacheng_jingyan.750x1334.png")
 	while 1:
 		if click_image(d, "tansuo_baoxiang_big.750x1334.png") != None:
-			time.sleep(5);
+			time.sleep(5)
 			click_image(d, "yuhunjieshu_4.750x1334.png")
 
 		if click_image(d, "tansuo_level_10.750x1334.png") != None:
-			time.sleep(3);
-			click_image(d, "tansuo_start.750x1334.png");
-			while tansuo_find(d):
-				pass
+			time.sleep(3)
+			click_image(d, "tansuo_start.750x1334.png")
+			tansuo_find(d)
 		elif click_image(d, "tansuo_start.750x1334.png") != None:
-			while tansuo_find(d):
-				pass
-	stopJiacheng(d);
+			tansuo_find(d)
+	# stopJiacheng(d)
 
-# d = atx.connect('http://192.168.0.104:8100', platform='ios') # platform也可以不指定
+#d = atx.connect('http://192.168.0.106:8100', platform='ios') # platform也可以不指定
 d = atx.connect('http://172.18.40.153:8100', platform='ios') # platform也可以不指定
 print d.rotation
 dis = d.display
 i = 0
 
-#lianxiaohao(d);
+#lianxiaohao(d)
 #kaiqijiacheng(d)
 # while 1:
-tansuo_lianji_10(d);
-# 	geren_tupo(d);
+tansuo_lianji_18(d)
+# 	geren_tupo(d)
 
-tansuo_lianji_28(d);
+tansuo_lianji_28(d)
 # while 1:
-#  	zzz_douji(d); 
+#  	zzz_douji(d) 
 
-#stopAll(d);
+#stopAll(d)
 while i<10:
 	yingyangliao_tupo(d)
-	geren_tupo(d);
-	# yuhun(d);
-	i = i+1;
+	geren_tupo(d)
+	# yuhun(d)
+	i = i+1
 
-# d.click();
+# d.click()
 # while 1:
 # 	yuhun(d)
 	#zudui(d)
