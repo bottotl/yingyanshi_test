@@ -378,49 +378,47 @@ def change_gouliang_and_start(d):
 	print "change gouliang end"
 
 def tansuo_find_boss(d):
-	attack = False
-	while (d.exists("tansuo_daguai.750x1334.png") != None) | (d.exists("daxiaoguai_3.750x1334.png") != None):
-		click_image(d, "tansuo_daguai.750x1334.png")
-		click_image(d, "daxiaoguai_3.750x1334.png")
-		attack = True
-	
-	if attack == False:
+	while (d.exists("tansuo_daguai.750x1334.png") == None) & (d.exists("daxiaoguai_3.750x1334.png") == None):
 		print "no boss to attack, move right"
 		offset = random.random() * 10
 		click(d, 140 + offset, 920 + offset)
 		time.sleep(1)
-	return attack
+		return False;
+
+	print 'have boss, start find'
+
+	while (d.exists("zhunbei.750x1334.png") == None):
+		if (click_image(d, "tansuo_daguai.750x1334.png") == None) & (click_image(d, "daxiaoguai_3.750x1334.png") == None) :
+			print "move right"
+			offset = random.random() * 10
+			click(d, 140 + offset, 920 + offset)
+			time.sleep(1)
+
+	return True
 
 def tansuo_find(d):
-	while d.exists("tansuo.750x1334.png") != None:
-		click_image(d, "tansuo.750x1334.png")
-		time.sleep(1)
-
-	print "start tansuo"
-	while (d.exists("tansuo.750x1334.png") == None) & (d.exists("tansuo_home_flag.750x1334.png") == None):
-		if d.exists("tansuo_xiao_baoxiang.750x1334.png") != None:#结束以后点击宝箱
-			while (d.exists("tansuo_xiao_baoxiang.750x1334.png") != None) | (d.exists("tansuo_huodejiangli.750x1334.png") != None):
-				click_image(d, "tansuo_xiao_baoxiang.750x1334.png")
-				time.sleep(2)
-				if d.exists("tansuo_huodejiangli.750x1334.png") != None:
-					click(d, 330, 1160)
-					print "jiang li"
-					time.sleep(2)
-		elif d.exists("return_btn.750x1334.png") != None:#找怪物
-			if tansuo_find_boss(d):
-				print "find boss"
-				if d.exists("tilibuzu_goumaitili.750x1334.png") != None:
-					stopAll(d)
-				change_gouliang_and_start(d)
-		else:#退出战斗界面
-			print "maybe attacking"
-			click_image(d, "zhunbei.750x1334.png")
-			click_image(d, "yuhunjieshu_3.750x1334.png")
+	if d.exists("tansuo_xiao_baoxiang.750x1334.png") != None:#结束以后点击宝箱
+		while (d.exists("tansuo_xiao_baoxiang.750x1334.png") != None) | (d.exists("tansuo_huodejiangli.750x1334.png") != None):
+			click_image(d, "tansuo_xiao_baoxiang.750x1334.png")
 			time.sleep(2)
-			click_image(d, "yuhunjieshu_4.750x1334.png")
-			click_image(d, "yuhunjieshu_4.750x1334.png")
-			click_image(d, "shibai_jixu.750x1334.png")
-	print "end tansuo"
+			if d.exists("tansuo_huodejiangli.750x1334.png") != None:
+				click(d, 330, 1160)
+				print "jiang li"
+				time.sleep(2)
+	elif d.exists("return_btn.750x1334.png") != None:#找怪物
+		if tansuo_find_boss(d):
+			print "find boss"
+			if d.exists("tilibuzu_goumaitili.750x1334.png") != None:
+				stopAll(d)
+			change_gouliang_and_start(d)
+	else:#退出战斗界面
+		print "maybe attacking"
+		click_image(d, "zhunbei.750x1334.png")
+		click_image(d, "yuhunjieshu_3.750x1334.png")
+		time.sleep(2)
+		click_image(d, "yuhunjieshu_4.750x1334.png")
+		click_image(d, "yuhunjieshu_4.750x1334.png")
+		click_image(d, "shibai_jixu.750x1334.png")
 
 def zzz_douji(d):
 	enter = "zzz_pipei.750x1334.png"#匹配按钮
@@ -441,31 +439,51 @@ def zzz_douji(d):
 	click_image(d, "zzz_end_jiangli.750x1334.png")
 	d.free_screen()
 
+def tansuoEntranceIfNeeded(d, level):
+	if d.exists("tansuo_home_flag.750x1334.png") != None:
+		print "in tansuo home, go tansuo entrance"
+		while click_image(d, level) != None:
+			time.sleep(2)
+			pass
+		print("did enter", level);
+
+
+def isTansuoFinished(d):
+	if (d.exists("tansuo_home_flag.750x1334.png") != None) | (d.exists("tansuo_entrance_flag.750x1334.png") != None):
+		print "tansuo finished"
+		return True
+	return False
+		
+
+def tansuo_once(d, level):
+	tansuoEntranceIfNeeded(d, level)
+	time.sleep(2);
+	click_image(d, "tansuo.750x1334.png")
+	print "start tansuo"
+	while isTansuoFinished(d) == False:
+		tansuo_find(d)
+		print "enter loop"
+
+	while d.exists("tansuo_home_flag.750x1334.png") == None:
+		print "try go back tansuo home"
+		click_image(d, "close_btn_1.750x1334.png")
+		
+	print "did go back tansuo home";
+	if click_image(d, "tansuo_baoxiang_big.750x1334.png") != None:
+		time.sleep(3)
+		click_image(d, "yuhunjieshu_4.750x1334.png")
+
+
 def tansuo_lianji_28(d):
 
 	backHome(d)
 	tansuo(d)
 	time.sleep(2)
-	while click_image(d, "tansuo_level_28.750x1334.png") != None:
-		pass
-	time.sleep(1)
 	startJiacheng(d, "jiacheng_jingyan.750x1334.png")
-	while 1:
-		if click_image(d, "tansuo_baoxiang_big.750x1334.png") != None:
-			time.sleep(5)
-			click_image(d, "yuhunjieshu_4.750x1334.png")
-
-		if click_image(d, "tansuo_level_28.750x1334.png") != None:
-			time.sleep(3)
-			click_image(d, "tansuo_start.750x1334.png")
-			time.sleep(2)
-			while tansuo_find(d):
-				pass
-		elif click_image(d, "tansuo_start.750x1334.png") != None:
-			time.sleep(2)
-			while tansuo_find(d):
-				pass
-
+	i = 0
+	while i < 3:
+		i = i + 1
+		tansuo_once(d, "tansuo_level_28.750x1334.png")
 	stopJiacheng(d)
 
 def tansuo_lianji_18(d):
@@ -489,8 +507,8 @@ def tansuo_lianji_18(d):
 			tansuo_find(d)
 	# stopJiacheng(d)
 
-#d = atx.connect('http://192.168.0.106:8100', platform='ios') # platform也可以不指定
-d = atx.connect('http://172.18.40.153:8100', platform='ios') # platform也可以不指定
+d = atx.connect('http://192.168.0.101:8100', platform='ios') # platform也可以不指定
+# d = atx.connect('http://172.18.40.153:8100', platform='ios') # platform也可以不指定
 print d.rotation
 dis = d.display
 i = 0
@@ -498,19 +516,17 @@ i = 0
 #lianxiaohao(d)
 #kaiqijiacheng(d)
 # while 1:
-tansuo_lianji_18(d)
+# tansuo_lianji_18(d)
 # 	geren_tupo(d)
-
-tansuo_lianji_28(d)
 # while 1:
 #  	zzz_douji(d) 
 
 #stopAll(d)
 while i<10:
-	yingyangliao_tupo(d)
 	geren_tupo(d)
+	tansuo_lianji_28(d)
 	# yuhun(d)
-	i = i+1
+	# i = i+1
 
 # d.click()
 # while 1:
