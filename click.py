@@ -285,7 +285,7 @@ def startJiacheng(d, image):
 	t_btns = find_all_image_position("screen.1920x1080.png", "jiacheng_pauseing.750x1334.png")
 	print t_btns
 
-	icons = find_all_image_position("screen.1920x1080.png", image)
+	icons = find_all_image_position("screen.1920x1080.png", image, 0.7)
 	print("find jiacheng %d"%(len(icons)))
 	if len(icons):
 		for icon in icons:
@@ -388,6 +388,9 @@ def tansuo_find_boss(d):
 	print 'have boss, start find'
 
 	while (d.exists("zhunbei.750x1334.png") == None):
+		if d.exists("tilibuzu_goumaitili.750x1334.png") != None:
+			stopAll(d)
+			return False;
 		if (click_image(d, "tansuo_daguai.750x1334.png") == None) & (click_image(d, "daxiaoguai_3.750x1334.png") == None) :
 			print "move right"
 			offset = random.random() * 10
@@ -431,10 +434,12 @@ def zzz_douji(d):
 	# click_image(d, quxiao)
 	click_image(d, enter)
 	d.keep_screen()
+	click_image(d, "douji_zhan.750x1334.png")
 	click_image(d, zidongshangzhen)
 	click_image(d, shoudong2zidong)
 	click_image(d, "zhunbei.750x1334.png")
 	click_image(d, "zzz_end.750x1334.png")
+	click_image(d, "douji_shibai.750x1334.png")
 	# click_image(d, "zzz_end_jiutun.750x1334.png")
 	click_image(d, "zzz_end_jiangli.750x1334.png")
 	d.free_screen()
