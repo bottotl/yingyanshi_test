@@ -313,6 +313,7 @@ def yingyangliao_tupo():
 
 def wait_attack_end():
 	while 1:
+		click_image("zhunbei.750x1334.png")
 		d.keep_screen()
 		success = d.exists("yuhunjieshu_4.750x1334.png")
 		fail = d.exists("shibai_jixu.750x1334.png")
@@ -448,12 +449,12 @@ def change_gouliang():
 		click(216, 486)
 		time.sleep(1)
 	
-	if d.exists("gouliang_sucai_btn.750x1334.png") == None:
+	while d.exists("gouliang_sucai_btn.750x1334.png") == None:
 		wait_image("gouliang_quanbu_btn.750x1334.png")
 		time.sleep(2)
 
 	wait_image("gouliang_sucai_btn.750x1334.png")
-	swipe(148, 764, 126, 496)#左滑一段距离
+	swipe(148, 884, 126, 352)#左滑一段距离
 	time.sleep(1)
 	swipe(134, 374, 370, 194)#替换第一张狗粮
 	time.sleep(2)
@@ -484,14 +485,16 @@ def tansuo_find_boss():
 	print 'have boss, start find'
 
 	while (d.exists("zhunbei.750x1334.png") == None):
-		if d.exists("tilibuzu_goumaitili.750x1334.png") != None:
-			stopAll()
-			return False
 		if (click_image("tansuo_daguai.750x1334.png") == None) & (click_image("daxiaoguai_3.750x1334.png") == None) :
 			print "move right"
 			offset = random.random() * 10
 			click(140 + offset, 920 + offset)
 			time.sleep(1)
+		if d.exists("tilibuzu_goumaitili.750x1334.png") != None:
+			stopAll()
+			return False
+		if (d.exists("tansuo_xiao_baoxiang.750x1334.png") != None) | (d.exists("tansuo_huodejiangli.750x1334.png") != None):
+			return False
 
 	return True
 
@@ -559,7 +562,7 @@ def isTansuoFinished():
 def tansuo_once(level):
 	tansuoEntranceIfNeeded(level)
 	time.sleep(2)
-	click_image("tansuo.750x1334.png")
+	click_image("tansuo.750x1334.png", True)
 	print "start tansuo"
 	while isTansuoFinished() == False:
 		tansuo_find()
