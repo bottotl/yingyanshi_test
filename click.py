@@ -198,13 +198,30 @@ def stopAll():
 	
 
 def juexing():
-	if d.exists("tiaozhan.750x1334.png") != None:
-		click_image("tiaozhan.750x1334.png")
+	backHome()
+	tansuo()
+	wait_image("juexing_entrance.750x1334.png")
+	time.sleep(2)
+	wait_image("juexing_lei_qiling.750x1334.png")
+	time.sleep(2)
+	startJiacheng("jiacheng_juexing.750x1334.png")
+	i = 0
+	while i<10:
+		wait_image("tiaozhan.750x1334.png")
 		time.sleep(2)
+		print 'enter loop'
 		while d.exists("tiaozhan.750x1334.png") == None:
+			# print '...'
 			click_image("zhunbei.750x1334.png")
 			click_image("yuhunjieshu_4.750x1334.png")
 			click_image("shibai_jixu.750x1334.png")
+			if d.exists("tilibuzu_goumaitili.750x1334.png") != None:
+				stopAll()
+				i=100
+		i = i+1
+
+	stopJiacheng()
+	print 'exit'
 
 def zudui():
 	while 1:
@@ -700,7 +717,8 @@ while 1:
 	i = i + 1
 	yingyangliao_tupo()
 	geren_tupo()
-	tansuo_lianji_28()
+	juexing()
+	# tansuo_lianji_28()
 	
 # d.home()
 # d.click()
