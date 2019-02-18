@@ -34,6 +34,7 @@ def find_all_image_position(origin='origin.png', query='query.png', confidence=0
 def click_image(image, disAppear=False, check=True):
 	if disAppear == False:
 		print("[DisAppear = False] try to find image", image)
+		check_xuanshang()
 		FindPoint = d.exists(image)
 		if FindPoint != None:
 			print(image)
@@ -204,7 +205,7 @@ def juexing():
 	time.sleep(2)
 	wait_image("juexing_lei_qiling.750x1334.png")
 	time.sleep(2)
-	startJiacheng("jiacheng_juexing.750x1334.png")
+	startJiacheng("jiacheng_juexing.750x1334.png", 0.95)
 	i = 0
 	while i<10:
 		wait_image("tiaozhan.750x1334.png")
@@ -381,7 +382,7 @@ def stopJiacheng():
 	wait_image("jiacheng_entrance_home.750x1334.png")
 
 
-def startJiacheng(image):
+def startJiacheng(image, confidence=0.7):
 	# 进入加成页面
 	wait_image("jiacheng_entrance_2.750x1334.png")
 	#关闭所有加成
@@ -399,7 +400,7 @@ def startJiacheng(image):
 	t_btns = find_all_image_position("screen.1920x1080.png", "jiacheng_pauseing.750x1334.png")
 	print t_btns
 
-	icons = find_all_image_position("screen.1920x1080.png", image, 0.7)
+	icons = find_all_image_position("screen.1920x1080.png", image, confidence)
 	print("find jiacheng %d"%(len(icons)))
 	if len(icons):
 		for icon in icons:
@@ -637,6 +638,13 @@ def random_click():
 	y = random.uniform(minY, maxY)
 	click(x, y)
 
+def yuhun_duiyuan():
+	click_image("yuhunjieshu_4.750x1334.png")
+	click_image("shibai_jixu.750x1334.png")
+	click_image("yuhunjieshu_3.750x1334.png")
+	click_image("zhunbei.750x1334.png")
+	click_image("yuhun_zidong_jieshou_zudui.750x1334.png")
+
 def baigui_yaoqing():
 	i = 0
 	flag = 0
@@ -703,12 +711,16 @@ def baigui():
 print d.rotation
 #lianxiaohao()
 #kaiqijiacheng()
+
+# while 1:
+# 	yuhun_duiyuan()
+
 # while 1:
 # tansuo_lianji_18()
 # 	geren_tupo()
-# while 1:
-# 	print "start douji"
-# 	zzz_douji() 
+while 1:
+	print "start douji"
+	zzz_douji() 
 	
 #stopAll()
 i =  0
@@ -716,9 +728,9 @@ while 1:
 	# baigui()
 	i = i + 1
 	yingyangliao_tupo()
+	# juexing()˜
 	geren_tupo()
-	juexing()
-	# tansuo_lianji_28()
+	tansuo_lianji_28()
 	
 # d.home()
 # d.click()
