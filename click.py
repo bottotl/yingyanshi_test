@@ -7,8 +7,8 @@ import os
 import global_var_model as gl
 
 
-# d = atx.connect('http://192.168.0.101:8100', platform='ios') # platform也可以不指定
-d = atx.connect('http://172.18.40.25:8100', platform='ios') # platform也可以不指定
+d = atx.connect('http://192.168.0.102:8100', platform='ios') # platform也可以不指定
+# d = atx.connect('http://172.18.40.25:8100', platform='ios') # platform也可以不指定
 dis = d.display
 
 def swipe(x1, y1, x2, y2):
@@ -718,24 +718,25 @@ print d.rotation
 # while 1:
 # tansuo_lianji_18()
 # 	geren_tupo()
-while 1:
-	print "start douji"
-	zzz_douji() 
+# while 1:
+# 	print "start douji"
+# 	zzz_douji() 
 	
 #stopAll()
 i =  0
 while 1:
 	# baigui()
 	i = i + 1
-	yingyangliao_tupo()
+	# yingyangliao_tupo()
 	# juexing()˜
-	geren_tupo()
 	tansuo_lianji_28()
+	geren_tupo()
+	
 	
 # d.home()
 # d.click()
 # while 1:
-# 	yuhun()
+# 	yuhun()ç
 	#zudui()
 
 
