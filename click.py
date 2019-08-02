@@ -1,15 +1,15 @@
 # coding: utf-8
-import atx
+import wda
 import time
 import aircv as ac
 import random
 import os
 import global_var_model as gl
-
-
-d = atx.connect('http://192.168.0.102:8100', platform='ios') # platform也可以不指定
+#com.netease.onmyoji, "1.0.4436.460297", "阴阳师"
+c = wda.Client('http://192.168.2.192:8100') # platform也可以不指定
 # d = atx.connect('http://172.18.40.25:8100', platform='ios') # platform也可以不指定
-dis = d.display
+
+print c.status()
 
 def swipe(x1, y1, x2, y2):
 	dis = d.display
@@ -236,7 +236,6 @@ def backHome():
 		click_image("close_btn_1.750x1334.png")
 		click_image("return_btn.750x1334.png")
 		click_image("tuichu_tansuo_queren.750x1334.png")
-
 
 def tansuo():
 	wait_image("tansuo_btn.750x1334.png", True)
